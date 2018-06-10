@@ -1,0 +1,119 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+
+        <h3 >Achat</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('bon') }}">Creer Commande</a></li>
+            <li class="active"><a href="{{ path('listbon') }}">Liste Commande</a></li>
+            <li><a href="{{ path('livraisoncmd',{'id':'0'}) }}">Livraison</a></li>
+
+
+        </ul>
+        <h3 >Fournisseur</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('Afournisseur_index') }}">Fournisseur</a></li>
+
+
+        </ul>
+
+    </div>
+
+{% endblock %}
+{% block page_top %}
+    <div class="row">
+        <div style="font-size: 25px;margin-top: 10px;margin-left: 120px" class="col-md-5"> Liste Commande </div>
+        <div class="col-md-5 " style="margin-top: 10px">
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+            {{ form(form) }}
+            <br>
+
+
+        </div>
+    </div>
+{% endblock %}
+{% block page_center %}
+<div class="row text-center">
+{% if cmd is empty %}
+<div style="font-size: 20px" class="alert-danger">Commande introuvable</div>
+{% endif %}
+</div>
+
+
+<br><br>
+
+    <div class="col-md-9 col-md-offset-1 ">
+
+
+
+        <table   class=" table table-hover table-striped table-bordered  ">
+            <thead>
+            <tr>
+                <th class="text-center">ID</th>
+                <th class="text-center">Utilisateur</th>
+                <th class="text-center">Fournisseur</th>
+
+                <th width="200px" class="text-center">Date</th>
+
+
+                <th class="text-center">Total(DH)</th>
+                <th class="text-center">Etat</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+                {% for c in cmd %}
+
+                    <tr>
+                        <td class="text-center">{{ c.id }}</td>
+                        <td class="text-center">{{ c.utilisateur }} </td>
+                        <td class="text-center">{{ c.fournisseur }} </td>
+                        <td class="text-center">{{ c.date.format("Y-m-d ")}}</td>
+
+                        <td class="text-center">{{ c.total }}DH</td>
+                        {% if c.etat=="Livré" %}<td class="text-center text-success">{{ c.etat }}</td>
+                        {% else %}
+                            <td class="text-center">{{ c.etat }}</td>{% endif %}
+
+                        <td class="text-center"><a href="{{ path('Vbon_voir',{'id':c.id}) }}">Voir</a>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+    
+
+<script>
+    $(function(){
+       $('form').addClass('form-inline');
+        $('label').hide();
+
+        $('form').submit(function(){
+
+            var q=$("#form_cherch").val();
+            patt2 = /^[0-9]+$/g;
+            if(! patt2.test(q) || q == 0){
+                alert('Numero de commande invalide ... ');
+                $("#form_cherch").val("");
+
+                return false;
+            }
+
+        });
+    });
+</script>
+{% endblock %}

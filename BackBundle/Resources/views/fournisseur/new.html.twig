@@ -1,0 +1,35 @@
+{% extends 'BackBundle::fournisseur/index.html.twig' %}
+
+{% block page_top %}    <div  class="row " >
+    <div class="col-md-offset-3 col-md-5" style="font-size: 25px;margin-top: 10px;margin-left: 200px">Nouveau Fournisseur</div>
+    <a class="btn btn-primary" style="margin-top: 10px;margin-left: 75px" href="{{ path('Afournisseur_index') }}">Retour à la Liste</a>
+        </div>
+{% endblock %}
+{% block page_center %}
+
+<div class="col-md-8 col-md-offset-2"   >
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+<br>
+    {{ form_start(form) }}
+    {{ form_end(form) }}
+</div>
+
+<script>
+    $(function(){
+
+
+        $(function(){
+            $('#achatbundle_fournisseur_categories').addClass('selectpicker');
+            $('#achatbundle_fournisseur_categories').attr('multiple','multiple');
+            $('#achatbundle_fournisseur_categories').attr('name','achatbundle_fournisseur[categories][]')
+        });
+        $('form').submit(function() {
+            testmail = /^[a-zA-Z-.]+@[a-zA-Z-]+\.[a-zA-Z]{2,6}$/;
+            testtele = test = /^[06][0-9]{8}$/;
+
+        });
+    })
+
+</script>
+
+{% endblock %}

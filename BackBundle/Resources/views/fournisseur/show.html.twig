@@ -1,0 +1,75 @@
+{% extends 'BackBundle::fournisseur/index.html.twig' %}
+
+{% block page_top %}   <div  class="col-md-3  " style="font-size: 25px;margin-top: 10px;margin-left: 130px">Fournisseur</div>
+    <div class="col-md-4" style="margin-top: 10px">
+        <a style="margin-left: 250px" class="btn btn-default" href="{{ path('Afournisseur_index') }}">Retour à La Liste</a>
+    </div>
+
+
+{% endblock %}
+{% block page_center %}
+
+
+    <div class="row">
+        <div style="margin-left: 130px" class="col-md-5">
+            <table class="table table-hover">
+                <tbody>
+                <br>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ fournisseur.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ fournisseur.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Prenom</th>
+                    <td>{{ fournisseur.prenom }}</td>
+                </tr>
+                <tr>
+                    <th>Categorie</th>
+                    <td>{% for c in fournisseur.categories %}  {{ c.categorie }} |
+
+                {% endfor %} </td>
+                </tr>
+                <tr>
+                    <th>Raisonsocial</th>
+                    <td>{{ fournisseur.raisonSocial }}</td>
+                </tr>
+                <tr>
+                    <th>Adresse</th>
+                    <td>{{ fournisseur.adresse }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ fournisseur.email }}</td>
+                </tr>
+                <tr>
+                    <th>Telephone</th>
+                    <td>{{ fournisseur.telephone }}</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td>{% if fournisseur.active %}Yes{% else %}No{% endif %}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-offset-1 col-md-4" style="margin-top: 30px">
+            <br>
+            <tr>
+
+
+
+                <a class="btn btn-info col-md-4 " href="{{ path('Afournisseur_modifier', { 'id': fournisseur.id }) }}">Modifier</a><br>
+<br>
+                <a style="margin-top: 8px" class="btn btn-danger col-md-4"
+                   onclick="if(!confirm('etes vous sur !')){return false}" href="{{ path('Afournisseur_delete', { 'id': fournisseur.id }) }}">Delete</a>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,77 @@
+
+{% extends 'BackBundle::utilisateur/index.html.twig' %}
+
+{% block page_top %}<div  class="col-md-3  " style="margin-top: 10px; margin-left: 130px ; font-size:25px"> Utilisateur  </div>
+
+    <div class="col-md-2 col-md-offset-3" style="margin-top: 10px">
+        <a class="btn btn-default col-md-8"  href="{{ path('Autilisateur_index') }}">Retour</a>
+    </div>
+
+
+{% endblock %}
+{% block page_center %}
+
+
+    <div class="row">
+        <div style="margin-left: 130px" class="col-md-5">
+            <table class="table table-hover">
+                <br>
+                <th>Id</th>
+                <td>{{ utilisateur.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ utilisateur.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Prenom</th>
+                    <td>{{ utilisateur.prenom }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ utilisateur.email }}</td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td>{{ utilisateur.password }}</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td>{% if utilisateur.active %}<img width="40px" src="{{ asset('valide.png') }}">  </a>
+                        {% else %}<img width="40px" src="{{ asset('invalide.png') }}">  </a>{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Role</th>
+                    <td>{{ utilisateur.role }}</td>
+                </tr>
+
+                </tbody>
+                </table>
+        </div>
+        <div class="col-md-offset-1 col-md-4" style="margin-top: 30px">
+            <br>
+            <tr>
+                <br><br>
+
+
+
+            <a class="btn  col-md-3 " href="{{ path('Autilisateur_modifier', { 'id': utilisateur.id }) }}">
+                <img width="60px" src="{{ asset('modifier.jpg') }}">
+            </a>
+
+
+
+            <a class="btn  col-md-3 col-md-offset-"
+               onclick="if(!confirm('Etes vous sur !')){ return false}"
+               href="{{ path('Autilisateur_delete', { 'id': utilisateur.id }) }}" >
+                <img width="60px" src="{{ asset('delete.jpg') }}"></a>
+
+        </div>
+    </div>
+<script>
+    $(function(){
+
+    });
+</script>
+
+{% endblock %}

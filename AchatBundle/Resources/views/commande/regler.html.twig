@@ -1,0 +1,137 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+
+        <h3 >CommandeVente</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('Vcmd_new') }}">Creer Commande</a></li>
+            <li><a href="{{ path('Vcmd_list',{'id':'0'}) }}">Liste Commande</a></li>
+            <li class="active"><a href="#">Regler Commande</a></li>
+
+        </ul>
+
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li ><a href="{{ path('Aclient_index') }}">Client</a></li>
+
+
+        </ul>
+
+    </div>
+
+{% endblock %}
+
+{% block page_top %}
+<div class="row">
+    <div class="col-md-11">
+        <div style="font-size: 25px" class=" col-md-4"> Commande N {{ cmd.id }}
+
+
+    </div>
+<div style="margin-top: 10px;font-size: 20px" class=" col-md-2 col-md-offset-1 ">
+   {{ date.format("Y-m-d ") }}
+</div>
+    <div class="col-md-offset-1 col-md-4 ">
+    <a style="margin-top: 10px" class="btn btn-default col-md-5 col-md-offset-1" href="#" onclick="window.history.back()" >Retour</a>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+{% block page_center %}
+
+    <div class="row">
+    {% if cmd.etat=="Reglé" %}
+        <br>
+        <br><br><hr>
+        <div style="font-size:30px"  class="text-center alert-danger" >Commande Déja Reglé  </div>
+    {% else %}
+    <div class="row">
+    <div class="col-md-8 col-md-offset-2"> <br>
+      <br>
+        <table   class=" table  ">
+            <thead>
+            <tr>
+                <th class="text-center">Ref</th>
+                <th width="200px" class="text-center">Designation</th>
+                <th class="text-center">PrixU (DH)</th>
+                <th class="text-center">Quantité</th>
+
+                <th class="text-center">sous Total(DH)</th>
+
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            {% for l in lg %}
+
+                <tr >
+                    <td class="text-center">{{ l.produit.id }}</td>
+                    <td 200px class="text-center">{{ l.produit.designation }}</td>
+                    <td class="text-center">{{ l.prixUnitaire }}DH</td>
+                    <td class="text-center">{{ l.quantite }}</td>
+                    <td class="text-center">{{ l.soustotal }}DH</td>
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+
+        </table>
+        <div class="row">
+           <hr>
+            </div>
+    </div>
+    </div>
+
+
+
+
+    <div class="col-md-12 col-md-offset-2  ">
+
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+    {{ form(form) }}
+    </div>
+
+<script>
+    $(function(){
+
+         $('form').addClass('form-inline');
+
+        $('form').submit(function(){
+            if(confirm("Confirmer !!")) {
+               if( $('#form_remise').val()>100 ||$('#form_remise').val() < 0 ){
+                   alert('Remise entre 0 et 100 %');
+                   return false;
+               }
+            }else {
+                alert('fff');
+                return false;
+            }
+        });
+       $('#form_remise').attr('type','number').attr('value','0');
+        $('#form_Regler').addClass('col-md-offset-5 ').attr('style','margin-top:20px')  ;
+        var total={{ cmd.total }};
+        $('#form_total').val(total);
+        $('#form_total').attr('disabled','disabled');
+        $('#form_remise').blur(function(){
+            var total={{ cmd.total }};
+            $('#form_total').val(total-total*$('#form_remise').val()/100);
+        });
+
+    });
+
+</script>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,164 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+
+
+        <h3 >Achat</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('bon') }}">Creer Commande</a></li>
+            <li><a href="{{ path('listbon') }}">Liste Commande</a></li>
+            <li class="active"><a href="{{ path('livraisoncmd',{'id':'0'}) }}">Livraison</a></li>
+
+        </ul>
+        <h3 >Fournisseur</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('Afournisseur_index') }}">Fournisseur</a></li>
+
+
+        </ul>
+
+    </div>
+
+{% endblock %}
+{% block page_top %}
+
+    <div class="row">
+        <div style="font-size: 25px;margin-top: 10px;margin-left: 200px" class="col-md-3"> Commande livrée </div>
+        <div class="col-md-4 " style="margin-top: 10px">
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+            {{ form(form) }}
+            <br>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block page_center %}
+
+    {% if cmd is defined %}
+
+
+    <div id="print">
+
+        <br>
+        <div class="row">
+            <div style="font-size: 20px;margin-left: 210px"  >Commande N°:
+                {{ cmd.id  }} </div>
+
+            <div style="font-size: 20px;margin-left: 210px"  >Fournisseur  <span style="margin-left:20px ">:
+                    {{ cmd.fournisseur.nom  }} {{ cmd.fournisseur.prenom  }}</span>
+
+            </div>
+            <div style="font-size: 20px;margin-left: 210px" >Date  <span style="margin-left:83px ">:
+                    {{ date.format('d-m-y') }} </span>
+
+            </div>
+
+
+        </div>
+        <div class="col-md-3 col-md-offset-2">
+            <hr>
+        </div>
+
+
+        <br>
+        <div class="col-md-8 col-md-offset-2 ">
+
+
+
+
+            <table   class=" table table-hover table-striped table-bordered  ">
+                <thead>
+                <tr>
+                    <th class="text-center">Ref</th>
+                    <th width="200px" class="text-center">Designation</th>
+                    <th class="text-center">PrixU TTC(DH)</th>
+                    <th class="text-center">Quantité</th>
+
+                    <th class="text-center">sous Total TTC(DH)</th>
+
+                </tr>
+                </thead>
+                <tbody id="tbody">
+
+                {% for l in lg %}
+
+                    <tr >
+                        <td class="text-center">{{ l.produit.id }}</td>
+                        <td 200px class="text-center">{{ l.produit.designation }}</td>
+                        <td class="text-center">{{ l.prixUnitaire }}DH</td>
+                        <td class="text-center">{{ l.quantite }}</td>
+                        <td class="text-center">{{ l.soustotal }}DH</td>
+
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+
+
+
+            <div class="row">
+
+                <hr><br>
+
+
+                            <span  style="margin-left: 150px">
+            {% if cmd.etat == "Passé" %}
+           <button class="btn btn-success col-md-2 col-md-offset-2" onclick="livrer({{ cmd.id }})" >Livrer</button>
+                                {% else %}
+                                <a class="col-md-12 text-success" style="margin-right:30px;font-size: 25px">
+                                    Comande-Livrée</a>
+                                {% endif %}
+                            </span>
+
+                            <span style="font-size:15px">
+                            Total TTC:
+                            </span>
+                             <span style="font-size: 20px; " class="  well">{{ cmd.total }} DH
+                                <br><br>
+                             </span>
+
+
+
+
+
+                <hr>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+{% endif %}
+
+
+   <script>
+       $(function(){
+           livrer=function(id){
+               if(confirm('Confirmer !')){
+
+                   var url=Routing.generate('livrecmdend',{'id':id});
+
+                 window.location.href=url
+               }
+           }
+          $('form').addClass('form-inline');
+           $('label').hide();
+
+       });
+   </script>
+
+{% endblock %}

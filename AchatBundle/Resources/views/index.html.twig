@@ -1,0 +1,33 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+
+
+        <h3 >Achat</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('bon') }}">Creer Commande</a></li>
+            <li><a href="{{ path('listbon') }}">Liste Commande</a></li>
+            <li><a href="{{ path('livraisoncmd',{'id':'0'}) }}">Livraison</a></li>
+
+        </ul>
+        <h3 >Fournisseur</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('Afournisseur_index') }}">Fournisseur</a></li>
+
+
+        </ul>
+
+    </div>
+
+{% endblock %}
+{% block page_top %}
+
+{% endblock %}
+{% block page_center %}
+    <div class="well text-danger "  style="padding-left:250px;font-size: 70px;margin-top: 110px ">
+    Gestion       <img  width="180" src="{{ asset('achat.jpg') }}"></div>
+{% endblock %}

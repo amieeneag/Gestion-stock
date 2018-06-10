@@ -1,0 +1,52 @@
+{% extends 'BackBundle::produit/index.html.twig' %}
+
+{% block page_top %}    <div  class="row " >
+    <div class="col-md-offset-3 col-md-5" style="font-size: 40px">Nouveau Produit</div>
+    <a class="btn btn-primary" style="margin-top: 10px;" href="{{ path('Aproduit_index') }}">Retour à la Liste</a>
+        </div>
+{% endblock %}
+{% block page_center %}
+
+<div class="col-md-8 col-md-offset-2"   >
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+<br>
+    {{ form_start(form) }}
+    {{ form_end(form) }}
+</div>
+
+
+
+<script>
+    $(function(){
+       $('#form_categorie').addClass('selectpicker');
+        $('#form_marque').addClass('selectpicker');
+
+        var cate = $('#stockbundle_produit_categorie').val();
+
+        $('#stockbundle_produit_categorie').attr('onchange','test()');
+        $('#stockbundle_produit_image').val('ddd').hide();
+
+        $('[for=stockbundle_produit_prixVente]').hide();
+        $('[for=stockbundle_produit_image]').hide();
+        $('.checkbox').hide();
+
+        $( '<input type="hidden" name="MAX_FILE_SIZE" value="1000" />' ).insertAfter( "#stockbundle_produit_file" );
+        $('#stockbundle_produit_submit').addClass("col-md-3 col-md-offset-2")
+        $('<a  class="btn btn-danger col-md-3 col-md-offset-2"  >Annuler</a><br><hr>' )
+                .insertAfter( "#stockbundle_produit_submit" );
+
+
+
+        $("[data-id]").hide();
+        $("[data-id="+cate+"]").show();
+
+        test=function(){
+            var cate = $('#stockbundle_produit_categorie').val();
+            $("[data-id]").hide();
+            $("[data-id="+cate+"]").show();
+        }
+
+
+    });
+</script>
+{% endblock %}

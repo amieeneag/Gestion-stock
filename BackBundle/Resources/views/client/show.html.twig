@@ -1,0 +1,72 @@
+{% extends 'BackBundle::client/index.html.twig' %}
+
+{% block page_top %}   <div  class="col-md-3  " style="font-size: 25px;margin-top: 10px;margin-left: 130px">Client</div>
+    <div class="col-md-4" style="margin-top: 10px">
+        <a class="btn btn-default" style="margin-left: 230px" href="{{ path('Aclient_index') }}">Retour à La Liste</a>
+    </div>
+
+
+{% endblock %}
+{% block page_center %}
+
+
+    <div class="row">
+        <div style="margin-left: 130px" class="col-md-5">
+            <table class="table table-hover">
+                <br>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ client.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ client.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Prenom</th>
+                    <td>{{ client.prenom }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>{{ client.statut }}</td>
+                </tr>
+                <tr>
+                    <th>Telephone</th>
+                    <td>{{ client.telephone }}</td>
+                </tr>
+                <tr>
+                    <th>Raisonsocial</th>
+                    <td>{{ client.raisonSocial }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ client.email }}</td>
+                </tr>
+                <tr>
+                    <th>Adresse</th>
+                    <td>{{ client.adresse }}</td>
+                </tr>
+                <tr>
+                    <th>Active</th>
+                    <td>{% if client.active %}Yes{% else %}No{% endif %}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-offset-1 col-md-4" style="margin-top: 30px">
+            <br>
+            <tr>
+
+
+
+                <a class="btn btn-info col-md-4" href="{{ path('Aclient_modifier', { 'id': client.id }) }}">Modifier</a><br>
+               <br>
+                <a class="btn btn-danger col-md-4"
+                   onclick="if(!confirm('etes vous sur !')){return false}" href="{{ path('Aclient_delete', { 'id': client.id }) }}">Delete</a>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}

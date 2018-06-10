@@ -1,0 +1,125 @@
+{% extends '::base.html.twig' %}
+
+
+
+{% block page_left %}
+
+    <div style="margin-left: 10px">
+
+
+
+
+        <h3 style="color: white">Administration</h3>
+        <ul style="margin-left:6px; padding-top:10px;font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li class="active" ><a href="{{ path('suiviventecmd') }}">Suivi Vente</a></li>
+            <li ><a href="{{ path('suivilivraisonbon') }}">Suivi Achat</a></li>
+             <li ><a href="{{ path('charte') }}">Chiffre d'affaire</a></li>
+
+
+
+
+        </ul>
+
+
+
+
+
+
+    </div>
+
+
+{% endblock %}
+
+{% block page_top %}
+    <div class="row">
+        <div class="row">
+        <div style="font-size: 25px;margin-top: 10px;margin-left: 200px" class="col-md-4 col-md-offset-1"> Liste Commande Vente</div>
+        <div class="col-md-offset-0 col-md-5  " style="margin-top: 10px">
+
+
+
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+            {{ form(form) }}
+
+
+
+
+        </div>
+    </div>
+{% endblock %}
+{% block page_center %}
+    <div class="row text-center">
+        {% if cmd is empty %}
+            <div style="font-size: 20px" class="alert-danger">Commande introuvable</div>
+        {% endif %}
+    </div>
+
+
+    <br><br>
+
+    <div class="col-md-8 col-md-offset-2 ">
+
+
+
+        <table   class=" table table-hover table-striped table-bordered  ">
+            <thead>
+            <tr>
+                <th class="text-center">ID</th>
+
+                <th class=" text-center">Utilisateur</th>
+
+                <th class="text-center">Client</th>
+                <th width="200px" class="text-center">Date</th>
+                <th class="text-center">Total TTC(DH)</th>
+
+
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            {% for c in cmd %}
+
+                <tr >
+                    <td class="text-center">{{ c.id }}</td>
+
+                    <td class="text-center">{{ c.utilisateur.nom }} {{ c.utilisateur.prenom }}</td>
+                    <td class="text-center">{{ c.client.nom }} {{ c.client.prenom }}</td>
+                    <td class="text-center">{{ c.date.format("Y-m-d ")}}</td>
+                    <td class="text-center">{{ c.total }}DH</td>
+
+
+
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    <script>
+        $(function(){
+        $('#form_date').datepicker({dateFormat: 'yy-mm-dd'},{minDate: new Date(2017, 6, 01)});
+
+           $('#form_date').attr('placeholder','choisir date');
+           $('#form_date').attr('autocomplete','off');
+           $('#form_date').attr('required',false);
+        $('label').hide();
+            $('form').addClass('form-inline');
+            $('#trier').change(function(){
+            var url=Routing.generate('suiviventefact');
+            window.location.href=url;
+            });
+
+
+        });
+    </script>
+{% endblock %}

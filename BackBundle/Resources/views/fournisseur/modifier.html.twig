@@ -1,0 +1,31 @@
+{% extends 'BackBundle::fournisseur/index.html.twig' %}
+
+{% block page_top %}    <div  class="col-md-3 " style="font-size: 25px;margin-top: 10px;margin-left: 180px">Modification</div>
+                        <div style="margin-top: 10px;margin-left: 270px" class="btn btn-default col-md-offset-">
+                            <a href="{{ path('Afournisseur_index') }}">Retour à La Liste</a></div>
+{% endblock %}
+{% block page_center %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+<br>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2" >
+            <div class="form_row">
+
+{{ form(form) }}
+        </div></div>
+
+    </div>
+
+<hr>
+
+<script>
+
+    $(function(){
+
+        $('#achatbundle_fournisseur_categories').addClass('selectpicker');
+        $('#achatbundle_fournisseur_categories').attr('multiple','multiple');
+        $('#achatbundle_fournisseur_categories').attr('name','achatbundle_fournisseur[categories][]')
+    });
+</script>
+
+{% endblock %}

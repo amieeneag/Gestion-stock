@@ -1,0 +1,50 @@
+<?php
+
+namespace AchatBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * FourCat
+ *
+ * @ORM\Table(name="four_cat")
+ * @ORM\Entity(repositoryClass="AchatBundle\Repository\FourCatRepository")
+ */
+class FourCat
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AchatBundle\Entity\Fournisseur", inversedBy="fournisseurs" , cascade={"persist"})
+     * @ORM\JoinColumn(name="fournisseur_id", referencedColumnName="id")
+     *@ORM\JoinColumn(nullable=false)
+     */
+    private $fournisseur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="StockBundle\Entity\Categorie", inversedBy="categories" , cascade={"persist"})
+     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
+     *@ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+}

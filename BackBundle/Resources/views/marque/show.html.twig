@@ -1,0 +1,54 @@
+{% extends 'BackBundle::marque/index.html.twig' %}
+{% block head %}
+    <script>
+        $(function(){
+            $('#Marque').attr('style','background-color:#EFEFEF');
+
+        });
+    </script>
+{% endblock %}
+{% block page_top %}   <div  class="col-md-7   " style="margin-left: 100px;font-size: 25px;margin-top: 10px">Marque</div>
+    <div class="col-md-3" style="margin-top: 10px">
+        <a class="btn btn-default" href="{{ path('Amarque_index') }}">Retour à La Liste</a>
+    </div>
+
+
+{% endblock %}
+{% block page_center %}
+
+
+    <div class="row">
+        <div style="margin-left: 130px" class="col-md-5">
+            <table class="table table-hover">
+                <br><br>
+
+                    <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ marque.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>marque</th>
+                        <td>{{ marque.marque }}</td>
+                    </tr>
+                    </tbody>
+
+            </table>
+        </div>
+        <div class="col-md-offset-1 col-md-4" style="margin-top: 30px">
+            <br>
+
+
+
+
+            <a class="btn btn-info col-md-5" href="{{ path('Amarque_modifier', { 'id': marque.id }) }}">Modifier</a><br>
+            <br>
+            <a class="btn btn-danger col-md-5"
+               onclick="if(!confirm('etes vous sur !')){return false}" href="{{ path('Amarque_delete', { 'id': marque.id }) }}">Delete</a>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}

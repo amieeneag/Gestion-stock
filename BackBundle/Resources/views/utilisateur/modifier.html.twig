@@ -1,0 +1,75 @@
+{% extends 'BackBundle::utilisateur/index.html.twig' %}
+
+{% block page_top %}    <div  class="col-md-3 " style="margin-top: 10px; margin-left: 170px ; font-size:25px">Modifier</div>
+    <div class="col-md-2 " style="margin-top: 10px;margin-left: 300px">
+        <a class="btn btn-default col-md-8"  href="{{ path('Autilisateur_index') }}">Retour</a>
+    </div>
+{% endblock %}
+{% block page_center %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+<br>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2" >
+            <div class="form_row">
+
+{{ form(form) }}
+        </div></div>
+
+    </div>
+
+<hr>
+
+<script>
+
+    $(function(){
+
+        $('[for=backbundle_utilisateur_nom]').append("<div id='testnom' hidden class='text-danger'> Nom doit contenir que des lettres miniscule </div>");
+        $('[for=backbundle_utilisateur_prenom]').append("<div id='testprenom' hidden class='text-danger'> Prenom doit contenir que des lettres miniscule </div> ");
+        $('[for=backbundle_utilisateur_email]').append("<div id='testemail' hidden class='text-danger'> Email invalide </div> ");
+        $('[for=backbundle_utilisateur_password]').append("<div id='testpassword' hidden class='text-danger'> Password doit contenir au moins 6 caractères </div> ");
+
+        $('form').submit(function(){
+            $('#testnom').attr('hidden','hidden');
+            $('#testprenom').attr('hidden','hiden');
+            $('#testemail').attr('hidden','hiden');
+            $('#testpassword').attr('hidden','hidden');
+            var nom=$("#backbundle_utilisateur_nom").val();
+            var p=$("#backbundle_utilisateur_prenom").val();
+            var email=$("#backbundle_utilisateur_email").val();
+            var pass=$("#backbundle_utilisateur_password").val();
+            test = /^[a-z]*$/g;
+            if( !test.test(nom) ){
+
+                $('#testnom').removeAttr('hidden');
+
+                return false;
+            }
+            test = /^[a-z]*$/g;
+            if( !test.test(p) ){
+
+                $('#testprenom').removeAttr('hidden');
+
+                return false;
+            }
+            test = /^[a-zA-Z-.]+@[a-zA-Z-]+\.[a-zA-Z]{2,6}$/ ;
+            if( !test.test(email) ){
+
+                $('#testemail').removeAttr('hidden');
+
+                return false;
+            }
+            if(pass.length<6){
+                $('#testpassword').removeAttr('hidden');
+
+                return false;
+            }
+
+
+
+
+        });
+
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'BackBundle::client/client.html.twig' %}
+{% block head %}
+    <script>
+        $(function(){
+            $('#Clients').attr('style','background-color:#EFEFEF');
+
+        });
+    </script>
+{% endblock %}
+
+{% block page_top %}
+    <div class="row">
+        <div  class="col-md-3 " style="font-size: 25px;margin-top: 10px;margin-left: 35px">Liste Client </div>
+        <div class="col-md-5 col-md-offset-1 " style="margin-top: 10px">
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+            {{ form(form) }}
+
+        </div>
+        <div class="col-md-2" style="margin-top: 10px"><a class=" col-md-12 btn btn-danger" href="{{ path('Aclient_new') }}" >Creer</a></div>
+    </div>
+{% endblock %}
+{% block page_center %}
+    <br>
+    <div class="col-md-12" style="overflow:auto" >
+        <br>
+        <table   class=" table table-striped table-bordered  ">
+            <thead>
+            <tr style="background-color: black;color: white">
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Statut</th>
+                <th>Telephone</th>
+                <th>Raisonsocial</th>
+                <th>Email</th>
+                <th>Adresse</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for client in clients %}
+                <tr>
+                    <td><a href="{{ path('Aclient_show', { 'id': client.id }) }}">{{ client.id }}</a></td>
+                    <td>{{ client.nom }}</td>
+                    <td>{{ client.prenom }}</td>
+                    <td>{{ client.statut }}</td>
+                    <td>{{ client.telephone }}</td>
+                    <td>{{ client.raisonSocial }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.adresse }}</td>
+                    <td>{% if client.active %}Yes{% else %}No{% endif %}</td>
+
+                    <td>
+                        <a class="btn btn-info col-md-12"  href="{{ path('Aclient_show', { 'id': client.id }) }}">show  </a><br>
+                          <a style="margin-top: 5px" class="btn btn-danger col-md-12" href="{{ path('Aclient_modifier', { 'id': client.id }) }}">Modifier</a><br>
+
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(function() {
+
+
+
+            $('label').hide();
+            $('form').attr('class','form-inline');
+
+        });
+
+
+
+    </script>
+
+
+{% endblock %}

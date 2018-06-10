@@ -1,0 +1,60 @@
+{% extends 'BackBundle::produit/index.html.twig' %}
+
+{% block page_top %}    <div  class="col-md-3 " style="font-size: 40px">Modifier</div>
+                        <div style="margin-top: 10px" class="btn btn-default col-md-offset-6">
+                            <a href="{{ path('Aproduit_index') }}">Retour à La Liste</a></div>
+{% endblock %}
+{% block page_center %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+<br>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-1" >
+            <div class="form_row">
+
+{{ form(form) }}
+        </div></div>
+    <div class="col-md-2" style="margin-left: 20px;margin-top: 400px">
+        <img width="130px" src="{{ asset('bundles/image/'~img) }}">
+    </div>
+    </div>
+
+
+
+
+    <script>
+       $(function() {
+
+           var cate = $('#stockbundle_produit_categorie').val();
+
+         //  $('#stockbundle_produit_image').replaceWith ('<img width="150px" src="{{ asset('bundles/image/'~img ) }}">');
+           $('#stockbundle_produit_image').hide()
+            
+           $('[for=stockbundle_produit_image]').hide();
+           $('#stockbundle_produit_file').removeAttr('required');
+           $('#stockbundle_produit_categorie').attr('onchange','test()');
+           $( '<input type="hidden" name="MAX_FILE_SIZE" value="1000" />' ).insertAfter( "#stockbundle_produit_file" );
+
+           {% if img is empty %}
+           $('#stockbundle_produit_image').val("0");
+
+           {%endif  %}
+
+           $("[data-id]").hide();
+           $("[data-id="+cate+"]").show();
+
+           test=function(){
+               var cate = $('#stockbundle_produit_categorie').val();
+               $("[data-id]").hide();
+               $("[data-id="+cate+"]").show();
+           }
+
+           $('form').on('submit',function(){
+
+
+           })
+       });
+
+
+
+    </script>
+{% endblock %}

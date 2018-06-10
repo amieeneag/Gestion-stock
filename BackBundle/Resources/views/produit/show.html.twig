@@ -1,0 +1,86 @@
+{% extends 'BackBundle::produit/index.html.twig' %}
+
+{% block page_top %}   <div  class="col-md-8  " style="font-size: 40px">Produit</div>
+    <div class="col-md-4" style="margin-top: 10px">
+<a class="btn btn-default" href="{{ path('Aproduit_index') }}">Retour à La Liste</a>
+    </div>
+
+
+   {% endblock %}
+{% block page_center %}
+
+
+<div class="row">
+    <div style="margin-left: 130px" class="col-md-5">
+    <table class="table table-hover">
+        <br>
+        <tbody>
+            <tr>
+                <th>Ref :</th>
+                <td>{{ produit.id }}</td>
+            </tr>
+            <tr>
+                <th>Designation :</th>
+                <td>{{ produit.designation }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ produit.description }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ produit.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ produit.marque }}</td>
+            </tr>
+            <tr>
+                <th>Prixachat :</th>
+                <td>{{ produit.prixAchat }}</td>
+            </tr>
+            <tr>
+                <th>Marge:</th>
+                <td>{{ produit.marge }}</td>
+            </tr>
+            <tr>
+                <th>Prixvente :</th>
+                <td>{{ produit.prixVente }}</td>
+            </tr>
+
+
+            <tr>
+                <th>Quantitestock :</th>
+                <td>{{ produit.quantiteStock }}</td>
+            </tr>
+            <tr>
+                <th>seuil :</th>
+                <td>{{ produit.quantiteSeuil }}</td>
+            </tr>
+
+
+            <tr>
+                <th>Active</th>
+                <td>{% if produit.active %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="col-md-offset-1 col-md-4" style="margin-top: 30px">
+        <br>
+        <tr>
+
+            <td><img width="150px" src="{{ asset('bundles/image/'~produit.image  ) }}"><hr></td></tr>
+
+
+           <a class="btn btn-info col-md-8" href="{{ path('Aproduit_modifier', { 'id': produit.id }) }}">Modifier</a><br>
+<hr>
+            <a class="btn btn-danger col-md-8"
+               onclick="if(!confirm('etes vous sur !')){return false}" href="{{ path('Aproduit_delete', { 'id': produit.id }) }}">Delete</a>
+
+
+    </div>
+</div>
+
+
+{% endblock %}

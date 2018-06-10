@@ -1,0 +1,66 @@
+{% extends '::base.html.twig' %}
+
+
+{% block page_left %}
+
+    <div style="margin-left: 10px">
+
+
+
+
+        <h3 style="color: white">Administration</h3>
+        <ul style="margin-left:6px; padding-top:10px;font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li ><a href="{{ path('suiviventecmd') }}">Suivi Vente</a></li>
+            <li ><a href="{{ path('suivilivraisonbon') }}">Suivi Achat</a></li>
+            <li class="active"><a href="{{ path('charte') }}">Chiffre d'affaire</a></li>
+
+
+
+        </ul>
+
+
+
+
+
+
+    </div>
+
+
+{% endblock %}
+
+{% block page_top %}
+
+
+
+
+{% endblock %}
+
+{% block page_center %}
+
+
+    <br><br>
+    <div style="font-size: 20px;margin-left: 373px;" class="">
+        Total : <span class="well">{{ total }} DH</span>
+    </div>
+    <br>
+    <script type="text/javascript">
+
+        {{ chart(chart) }}
+
+    </script>
+
+    <div  id="chiffre" style="border: solid; min-width: 400px; height: 400px;margin-bottom:30px ; margin-left: 50px;margin-right: 80px"></div>
+
+<script>
+    $(function(){
+
+
+
+    });
+</script>
+
+
+
+{% endblock %}
+

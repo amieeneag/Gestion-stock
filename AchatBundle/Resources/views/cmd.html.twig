@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Commande</title>
+    <meta charset="UTF-8"/>
+    <script src=" {{ asset('bundles/js/jquery-mini.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href=" {{ asset('bundles/bootstrap/css/bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet" href=" {{ asset('jquery-ui/jquery-ui.min.css') }}">
+
+    <link type="text/css" rel="stylesheet"
+          href=" {{ asset('bundles/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
+    <script src=" {{ asset('bundles/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href=" {{ asset('bundles/css/laayout.css') }}">
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ asset('jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('alert/dist/sweetalert.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('alert/dist/sweetalert.css') }}">
+    <script src="{{ asset('bundles/js/print.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/css/print.css') }}">
+
+    {% block head %}{% endblock %}
+
+</head>
+<body>
+
+<br><br><br>
+
+<div style="background-color: white" class="col-md-8 col-md-offset-2 ">
+
+<br><br>
+
+
+    <div class="row">
+        <div class="col-md-3" style="font-size: 17px;margin-top: 20px">
+            Rektour SARL <br>
+            Agouzoul ahmed amine <br>
+            Avenue 5 Elkelaa<br>
+            0524417895<br>
+            ahmed.amine.agouzou@gmail.com
+        </div>
+        <div class="col-md-3 col-md-offset-1" style="margin-top:10px">
+            <img src="{{ asset('bundles/rektour1.jpg') }}">
+        </div>
+        <div class="col-md-3" style="font-size: 17px;margin-left: 140px;margin-top: 40px" >
+            {{ four.nom }} {{ four.prenom }}<br>
+            {{ four.raisonSocial }}<br>
+            {{ four.email }}<br>
+            {{ four.telephone }}
+        </div>
+
+    </div>
+    <hr><br><br>
+     <div style="font-size: 17px"> Monsieur(Madam),<br>
+         Nous vous prions de nous livrer la commande mentionné ci dessous , dans le delais le plus possible
+        <br> le paiement sera effectué aux conditions habituelles , dès receptions de la commande.<br>
+         Nous vous remercions de bien vouloir nous confirmer notre commande.<br>
+         Veuillez agréer, Monsieur (Madame), nos salutations distinguées.<br><hr>
+
+
+
+     </div>
+    <mark>Detail Commande N°: {{ cmd.id }}</mark>
+        <table   class=" table  ">
+
+            <thead>
+            <tr>
+                <th class="text-center">Produit</th>
+                <th class="text-center">Categorie</th>
+                <th class="text-center">Marque</th>
+                <th class="text-center">Quantité</th>
+
+
+
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            {% for l in lg %}
+
+                <tr>
+                    <td class="text-center">{{ l.produit.designation }}</td>
+                    <td class="text-center">{{ l.produit.categorie }} </td>
+                    <td class="text-center">{{ l.produit.marque }} </td>
+                    <td class="text-center">{{ l.quantite }} </td>
+
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+<br><hr>
+</body>

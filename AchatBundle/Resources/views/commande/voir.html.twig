@@ -1,0 +1,128 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+
+
+        <h3 >Achat</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('bon') }}">Creer Commande</a></li>
+            <li><a href="{{ path('listbon',{'id':'0'}) }}">Liste Commande</a></li>
+             <li class=""><a href="{{ path('livraisoncmd',{'id':'0'}) }}">Livraison</a></li>
+            <li class="active"><a href="#">Voir Commande</a></li>
+
+        </ul>
+        <h3 >Fournisseur</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('Afournisseur_index') }}">Fournisseur</a></li>
+
+
+        </ul>
+
+    </div>
+
+{% endblock %}
+{% block page_top %}
+    <div class="">
+     <button type="button" style="margin-top: 10px" class="col-md-offset-5 btn btn-primary" onclick="printJS('print', 'html')">
+                     Imprimer
+                    </button>
+    <br><br>
+<br>
+
+
+
+{% endblock %}
+{% block page_center %}
+        <div id="print">
+
+<br>
+        <div class="row">
+        <div style="font-size: 20px;margin-left: 210px"  >Commande N°:
+                {{ cmd.id  }} </div>
+
+        <div style="font-size: 20px;margin-left: 210px"  >Fournisseur  <span style="margin-left:20px ">:
+                {{ cmd.fournisseur.nom  }} {{ cmd.fournisseur.prenom  }}</span>
+
+                </div>
+                <div style="font-size: 20px;margin-left: 210px" >Date  <span style="margin-left:83px ">:
+                {{ date.format('d-m-y') }} </span>
+
+                </div>
+
+
+        </div>
+        <div class="col-md-3 col-md-offset-2">
+         <hr>
+</div>
+
+
+<br>
+    <div class="col-md-8 col-md-offset-2 ">
+
+
+
+
+        <table   class=" table table-hover table-striped table-bordered  ">
+            <thead>
+            <tr>
+                <th class="text-center">Ref</th>
+                <th width="200px" class="text-center">Designation</th>
+                <th class="text-center">PrixU TTC(DH)</th>
+                <th class="text-center">Quantité</th>
+
+                <th class="text-center">sous Total TTC(DH)</th>
+
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+                {% for l in lg %}
+
+                    <tr >
+                        <td class="text-center">{{ l.produit.id }}</td>
+                        <td 200px class="text-center">{{ l.produit.designation }}</td>
+                        <td class="text-center">{{ l.prixUnitaire }}DH</td>
+                        <td class="text-center">{{ l.quantite }}</td>
+                        <td class="text-center">{{ l.soustotal }}DH</td>
+
+                    </tr>
+
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+
+
+
+                <div class="row">
+
+                       <hr><br>
+
+
+
+
+                            <span style="font-size:15px;margin-left: 435px">
+                            Total TTC:
+                            </span>
+                             <span style="font-size: 20px; " class="  well">{{ cmd.total }} DH
+                                <br><br>
+                             </span>
+
+
+
+
+
+        <hr>
+
+       </div>
+        </div>
+
+</div>
+
+
+{% endblock %}

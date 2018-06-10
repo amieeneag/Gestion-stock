@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %}
+
+
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+
+        <h3 >Utilisateurs</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li class="active"><a href="{{ path('Autilisateur_index') }}">Utilisateurs</a></li>
+            <li ><a href="{{ path('Autilisateur_compte') }}">Mon compte</a></li>
+
+
+        </ul>
+
+
+    </div>
+
+
+{% endblock %}
+
+{% block page_top %}
+    <div class="row">
+
+
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block page_center %}
+    <br><br><br>
+    <img width="90%" height="280px" style=" margin-left: 50px"  src="{{ asset('bundles/espace_admin.gif') }}">
+
+
+
+
+{% endblock %}
+

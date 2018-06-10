@@ -1,0 +1,19 @@
+{% extends 'BackBundle::marque/index.html.twig' %}
+
+{% block page_top %}    <div  class="row " >
+    <div class="col-md-offset-3 col-md-5" style="font-size: 40px">Nouveau Marque</div>
+    <a class="btn btn-primary" style="margin-top: 10px;" href="{{ path('Amarque_index') }}">Retour à la Liste</a>
+        </div>
+{% endblock %}
+{% block page_center %}
+
+<div class="col-md-8 col-md-offset-2"   >
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+<br>
+    {{ form_start(form) }}
+    {{ form_end(form) }}
+</div>
+
+
+
+{% endblock %}
