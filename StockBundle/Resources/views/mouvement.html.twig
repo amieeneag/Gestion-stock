@@ -1,0 +1,88 @@
+{% extends 'StockBundle::index.html.twig' %}
+
+
+{% block head %}
+    <script>
+        $(function(){
+            $('#{{ type }}').addClass("active");
+
+        });
+    </script>
+{% endblock %}
+
+{% block page_top %}
+
+    <div class="row">
+    <div  class="col-md-3  " style="margin-top: 10px;margin-left: 200px; font-size: 25px">Produits {{ type }}s</div>
+        <div class="col-md-4  " style="margin-left: 85px; margin-top: 10px">
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+            {{ form(form) }}
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block page_center %}
+
+
+
+    <br><br>
+
+    <div class="col-md-8 col-md-offset-2 ">
+
+
+
+        <table   class=" table table-hover table-striped table-bordered  ">
+            <thead>
+            <tr>
+                <th class="text-center">Produit</th>
+                <th class="text-center">image</th>
+                <th width="200px" class="text-center">Date</th>
+                <th class="text-center">statut</th>
+
+
+
+                <th class="text-center">quantite</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            {% for c in list     %}
+
+                <tr >
+                    <td class="text-center">{{ c.produit.designation }}</td>
+                    <td class="text-center"><img width="70px" src="{{ asset('bundles/image/'~c.produit.image) }} "></td>
+                    <td class="text-center">{{ c.date.format("Y-m-d ")}}</td>
+                    <td class="text-center">{{ c.statut }} </td>
+                    <td class="text-center">{{ c.quantite}} </td>
+
+
+
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+   <script>
+       $(function(){
+
+          $('#{{ type }}').addClass('active');
+           $('form').attr('class','form-inline');
+           $('label').hide();
+           $('#form_date').datepicker({dateFormat: 'yy-mm-dd'},{minDate: new Date(2017, 6, 01)});
+
+           $('#form_date').attr('placeholder','choisir date');
+
+       });
+   </script>
+{% endblock %}

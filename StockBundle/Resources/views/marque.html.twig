@@ -1,0 +1,33 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+        <h3>Stock{% if app.session.flashBag.has('msg') %}
+            <span style="color: red">*</span> {% endif %}</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li id="alert"><a href="{{ path('alerte') }}">Alerte{% if app.session.flashBag.has('nb') %}
+                    <span style="color: red">({{ app.session.flashBag.get('nb')['0'] }})</span> {% endif %}</a></li>
+
+        </ul>
+
+        <h3>Produits</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li id="produit"><a href="{{ path('produit_index') }}">Produit</a></li>
+            <li  ><a href="{{ path('Acategorie_index') }}">Categorie</a></li>
+            <li class="active" > <a href="{{ path('Amarque_index') }}">Marque</a></li>
+
+        </ul>
+
+
+        <h3>Mouvement</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+            <li><a href="{{ path('mouvement',{'n':'entré'}) }}">Entrée</a></li>
+            <li><a href="{{ path('mouvement',{'n':'sorti'}) }}">Sortie</a></li>
+        </ul>
+
+    </div>
+
+{% endblock %}

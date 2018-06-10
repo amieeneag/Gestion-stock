@@ -1,0 +1,62 @@
+<html>
+<head>
+
+    <title>Authentification</title>
+    <meta charset="UTF-8"/>
+    <script src=" {{ asset('bundles/js/jquery-mini.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href=" {{ asset('bundles/bootstrap/css/bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet"
+          href=" {{ asset('bundles/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
+    <script src=" {{ asset('bundles/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/css/connexion.css') }}">
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+</head>
+<body class="container" style="background-color: ghostwhite">
+
+
+<div id="cnx" style="background-color: white;border: solid;border-color: slategrey" class=" col-md-8 col-md-offset-2">
+
+
+    <br>
+    <div class="row">
+        <div class="row">
+            <h1 style="color: #2aabd2" class="col-md-6 col-md-offset-5">Authentification
+                <img width="70" src="{{ asset('bundles/logo.jpg') }}">
+                <hr>
+            </h1>
+            <br>
+        </div>
+        <div class="col-md-4"><img class="img-responsive" src="{{ asset('bundles/rektour1.jpg') }}"><br>
+
+
+        </div>
+        <div class="col-md-6 col-md-offset-1">
+
+            <h4 id="erreur" class="alert-danger"> {% if app.session.flashBag.has('notice')  %}
+
+                        {{ app.session.flashBag.get('notice')['0'] }} {% endif %}
+
+            </h4>
+
+            <br>
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form) }}
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+
+
+
+
+
+</html>

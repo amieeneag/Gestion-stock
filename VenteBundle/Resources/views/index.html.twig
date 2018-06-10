@@ -1,0 +1,38 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+
+        <h3 >CommandeVente</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('Vcmd_new') }}">Creer Commande</a></li>
+            <li><a href="{{ path('Vcmd_list') }}">Liste Commande</a></li>
+
+        </ul>
+        <h3 >Facture</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('facture_list') }}">Facture</a></li>
+
+
+        </ul>
+        <h3 >Client</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('Aclient_index') }}">Client</a></li>
+
+
+        </ul>
+
+    </div>
+
+{% endblock %}
+{% block page_top %}
+
+{% endblock %}
+{% block page_center %}
+    <div  style="padding-left:100px;font-size: 70px;background-color:darkslategrey;color: red;margin-top: 130px ">
+        Gestion <img width="450" src="{{ asset('vente.jpg') }}"> </div>
+{% endblock %}

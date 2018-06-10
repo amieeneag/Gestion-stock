@@ -1,0 +1,75 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+        <br>
+        <h3 style="color:white" >Facture</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li class="active" id="achatlist"><a href="{{ path('facture_list',{'n':'achat'}) }}">Facture Livraison</a></li>
+            <li id="ventelist"><a href="{{ path('facture_list',{'n':'vente'}) }}">Facture Vente</a></li>
+
+
+        </ul>
+
+
+
+    </div>
+
+{% endblock %}
+{% block page_top %}
+    <div class="row">
+        <div style="font-size: 32px" class="col-md-5">Liste Facture Livraison</div>
+
+    </div>
+{% endblock %}
+{% block page_center %}
+
+
+
+    <br><br>
+
+    <div class="col-md-8 col-md-offset-1 ">
+
+
+
+        <table   class=" table table-hover table-striped table-bordered  ">
+            <thead>
+            <tr>
+                <th class="text-center">ID</th>
+
+                <th width="200px" class="text-center">Date</th>
+
+
+                <th class="text-center">Total(DH)</th>
+
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            {% for c in fact %}
+
+                <tr >
+                    <td class="text-center">{{ c.id }}</td>
+
+                    <td class="text-center">{{ c.date.format("Y-m-d ")}}</td>
+
+                    <td class="text-center">{{ c.total }}DH</td>
+                    <td class="text-center"><a href="{{ path('Lfacture_voir',{'id':c.id}) }}">Voir</a>
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+{% endblock %}

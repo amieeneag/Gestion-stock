@@ -1,0 +1,31 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+        <br>
+        <h3 >Facture</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('Vcmd_new') }}">Facture Achat</a></li>
+            <li><a href="{{ path('Vcmd_list') }}">Facture Vente</a></li>
+            <li class="active"><a href="{{ path('Vcmd_list') }}">Regler Facture </a></li>
+
+        </ul>
+
+
+
+    </div>
+
+{% endblock %}
+{% block page_top %}
+
+{% endblock %}
+{% block page_center %}
+
+
+
+
+
+
+{% endblock %}

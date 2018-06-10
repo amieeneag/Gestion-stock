@@ -1,0 +1,109 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+        <br>
+        <h3 >Facture</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li ><a href="{{ path('facture_list',{'n':'achat'}) }}">Facture Livraison</a></li>
+            <li><a href="{{ path('facture_list',{'n':'vente'}) }}">Facture Vente</a></li>
+            <li class="active"><a href="">Voir Facture </a></li>
+
+        </ul>
+
+
+
+    </div>
+
+{% endblock %}
+{% block page_top %}
+
+
+    <div style="font-size: 32px" class=" col-md-4">Facture Livraison N{{fact.id}}
+    </div>
+
+    <div style="margin-top: 10px;font-size: 20px" class=" col-md-2  ">
+
+        <button onclick="window.print()" class="btn btn-primary"> imprimer </button>
+
+    </div>
+    <div class="col-md-offset-2 col-md-4 ">
+        <a style="margin-top: 10px" class="btn btn-default col-md-5 col-md-offset-1" href="#" onclick="window.history.back()" >Retour</a>
+    </div>
+    <br>
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block page_center %}
+    <div style="font-size: 20px; margin-top: 50px;margin-left: 20px" class="row" >
+        <div class="col-md-3 "> Fournisseur : <span style="text-decoration: underline"> {{ fact.commandeAchat.fournisseur }}</span ></div>
+        <div class="col-md-3 col-md-offset-1">
+            <span style=""> date : <span style="text-decoration: underline"> {{ fact.date.format("Y-m-d ") }} </span></span>
+
+        </div>
+
+        <div class="col-md-3 col-md-offset-1">
+            <span style=""> <span style="text-decoration: "> REKTOUR SARL<br>Elkelaa sraghnas<br>
+                      Rektour@gmail.com<br>0524417895 </span></span>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+    <div class="col-md-8 col-md-offset-2"> <br>
+        <br>
+        <table   class=" table  ">
+            <thead>
+            <tr>
+                <th class="text-center">Ref</th>
+                <th width="200px" class="text-center">Designation</th>
+                <th class="text-center">PrixU (DH)</th>
+                <th class="text-center">Quantité</th>
+
+                <th class="text-center">sous Total(DH)</th>
+
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            {% for l in lg %}
+
+                <tr >
+                    <td class="text-center">{{ l.produit.id }}</td>
+                    <td 200px class="text-center">{{ l.produit.designation }}</td>
+                    <td class="text-center">{{ l.prixUnitaire }}DH</td>
+                    <td class="text-center">{{ l.quantite }}</td>
+                    <td class="text-center">{{ l.soustotal }}DH</td>
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+
+        </table>
+        <div style="font-size: 20px;margin-left: 400px" class="row">
+
+            Total : <span class="well">{{ fact.CommandeAchat.total }} DH</span>
+        </div>
+    </div>
+
+
+    <div>
+
+
+
+
+{% endblock %}

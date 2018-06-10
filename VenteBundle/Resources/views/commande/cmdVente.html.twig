@@ -1,0 +1,88 @@
+
+{% block page_top %}
+    <div class="row">
+        <div style="font-size: 32px" class="col-md-5"> Liste Commande </div>
+        <div class="col-md-6 col-md-offset-1 " style="margin-top: 10px">
+
+
+
+            <br>
+
+
+        </div>
+    </div>
+{% endblock %}
+{% block page_center %}
+    <div class="row text-center">
+        {% if cmd is empty %}
+            <div style="font-size: 20px" class="alert-danger">Commande introuvable</div>
+        {% endif %}
+    </div>
+
+
+    <br><br>
+
+    <div class="col-md-8 col-md-offset-1 ">
+
+
+
+        <table   class=" table table-hover table-striped table-bordered  ">
+            <thead>
+            <tr>
+                <th class="text-center">ID</th>
+
+                <th class=" text-center">Statut</th>
+                <th width="200px" class="text-center">Date</th>
+                <th class="text-center">Client</th>
+
+                <th class="text-center">Total(DH)</th>
+
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            {% for c in cmd %}
+
+                <tr >
+                    <td class="text-center">{{ c.id }}</td>
+                    <td style="font-size: 20px" class="{%   if c.etat=='Passé' %} text-danger {% else %}  text-success {% endif %} text-center ">{{ c.etat }}</td>
+
+                    <td class="text-center">{{ c.date.format("Y-m-d ")}}</td>
+                    <td class="text-center">{{ c.client.nom }} {{ c.client.prenom }}</td>
+                    <td class="text-center">{{ c.total }}DH</td>
+                    <td class="text-center"><a href="{{ path('Vcmd_voir',{'id':c.id}) }}">Voir</a>
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    <script>
+        $(function(){
+            $('form').addClass('form-inline');
+            $('label').hide();
+
+            $('form').submit(function(){
+
+                var q=$("#form_cherch").val();
+                patt2 = /^[0-9]+$/g;
+                if(! patt2.test(q) || q == 0){
+                    alert('Numero de commande invalide ... ');
+                    $("#form_cherch").val("");
+
+                    return false;
+                }
+
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+
+        <h3 >Commande</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="#">Creer Commande</a></li>
+            <li><a href="#">Liste Commande</a></li>
+
+        </ul>
+        <h3 >Facture</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('facture_list') }}">Facture</a></li>
+
+
+        </ul>
+        <h3>Client</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li class="active"><a href="{{ path('Aclient_index') }}">Client</a></li>
+
+
+        </ul>
+
+    </div>
+
+{% endblock %}
+

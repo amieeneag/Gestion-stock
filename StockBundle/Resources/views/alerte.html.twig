@@ -1,0 +1,210 @@
+
+{% extends 'StockBundle::index.html.twig' %}
+
+
+
+{% block page_left %}
+    <div style="margin-left: 10px" xmlns="http://www.w3.org/1999/html">
+
+        <h3>Stock{% if app.session.flashBag.has('msg') or app.session.flashBag.has('stock') %}
+            <span style="color: red">*</span> {% endif %}</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li class="active" id="alert"><a href="{{ path('alerte') }}">Alerte{% if app.session.flashBag.has('nb') %}
+                    <span style="color: red">({{ app.session.flashBag.get('nb')['0'] }})</span> {% endif %}</a></li>
+
+        </ul>
+
+        <h3>Produits</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li id="produit"><a href="{{ path('produit_index') }}">Produit</a></li>
+            <li ><a href="{{ path('Acategorie_index') }}">Categorie</a></li>
+            <li> <a href="{{ path('Amarque_index') }}">Marque</a></li>
+
+        </ul>
+
+
+        <h3>Mouvement </h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('mouvement',{'n':'entré'}) }}"> Entré</a></li>
+            <li><a href="{{ path('mouvement',{'n':'sorti'}) }}"> Sortie</a></li>
+        </ul>
+
+    </div>
+
+{% endblock %}
+
+{% block page_top %}
+    <div class="row">
+        <div style="font-size: 25px;margin-top: 10px;margin-left: 35px" class=" col-md-5"><span class="text-info"> {{ app.session.get('nbp') }}</span> Produit(s) en état critique</div>
+        <div class="col-md-6  " style="margin-top: 10px">
+
+             <button class="col-md-3 col-md-offset-4 btn btn-success" onclick="validercmd()">Valider</button>
+               <button class="col-md-3 btn btn-default" style="margin-left: 20px" onclick="annuler()">Annuler</button>
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+            {{ form(form) }}
+
+
+        </div>
+    </div>
+{% endblock %}
+{% block page_center %}
+    <br>
+    <div class="col-md-12" style="overflow:auto" >
+        <br>
+        <table   class=" table  table-bordered  ">
+            <thead>
+            <tr  style="background-color: black;color: white">
+                <th>Ref</th>
+                <th >Designation</th>
+                <th width="250px">Description</th>
+                <th>categorie</th>
+                <th>Marque</th>
+                <th >Quantité<br>Stock</th>
+                <th  width="100px" >Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for alerte in alertes %}
+                <tr id="{{ alerte.id }}">
+                    <td><a href="{{ path('produit_show', { 'id': alerte.produit.id }) }}">{{ alerte.produit.id }}</a></td>
+                    <td >{{ alerte.produit.designation }}</td>
+                    <td >{{ alerte.produit.description }}</td>                    <td>{{ alerte.produit.categorie }}</td>
+                    <td>{{ alerte.produit.marque }}</td>
+                    <td class="alert-danger" >{{ alerte.produit.quantiteStock }}</td>
+
+
+                    <td>
+
+
+                  <a class="text-danger"  >{% if alerte.etat=="A Commander" %}
+                          <button type="button" onclick="choisir({{ alerte.id }})" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                              Commander
+                          </button>
+                      {% else %}
+                          Commandé
+                      {% endif %}
+
+
+                  </a>
+
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button  type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Fournisseur</h4>
+                    </div>
+                    <div   class=" modal-body">
+                        <select id="four" class="form-control">
+
+                        </select>
+                        <hr>
+                        <h4 class="modal-title" id="myModalLabel">Quantité Demandé</h4>
+                        <input id="qte" min="1" type="number" style="width: 200px" class="form-control col-md-3" placeholder="Quantité Produit " > </input>
+                    <hr>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button id="enregistrer"  stype="submit" data-dismiss="modal" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $(function() {
+
+            annuler=function(){
+
+
+                if(confirm('Etes vous sur')){
+                    var url=Routing.generate('annulcmdgener');
+                    window.location.href=url;
+                }
+
+            }
+
+            $('#form_cherch').removeAttr('required');
+            choisir=function(id) {
+
+                var url = Routing.generate('chercherfournisseur', {'id': id});
+                $.get(url, function (data) {
+
+                    var t = data.length;
+                    var i = 0;
+
+
+                    $('#four').html("");
+
+
+                    for (i = 0; i < t; i++) {
+                        $('#four').append('<option value="'+data[i].id +'">'+data[i].nom+' '+data[i].prenom +'</option>');
+
+                    }
+                $('#enregistrer').attr('onclick','valider('+id+')' );
+                });
+
+            }
+            validercmd=function(){
+
+                        var url=Routing.generate('validercmd');
+                swal("Commande Envoyé", "", "success")
+                        window.location.href=url;
+
+            }
+
+            valider=function(id){
+
+                var q=$('#qte').val();
+
+
+
+                if(q <= 0){
+                    swal('Commande invalide' , 'Quantité entrée invalide');
+                }else {
+                    var four=$('#four').val();
+
+                    var url=Routing.generate('listfournisseur',{'four':four,'a':id,'q':q})
+                    $.get(url,function(data){
+                        if(data==1) {
+                            swal("Produit ajouté à la commande", "success");
+                            $('#'+id).html("");
+
+                        }
+                    });
+
+                    $('#qte').val("");
+                }
+            }
+
+
+            $('label').hide();
+            $('form').attr('class','form-inline');
+              $('form').hide();
+                    $('form').on('submit',function(){
+
+
+            })
+        });
+
+
+
+    </script>
+
+
+{% endblock %}

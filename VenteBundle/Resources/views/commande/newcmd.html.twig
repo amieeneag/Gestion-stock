@@ -1,0 +1,304 @@
+{% extends '::laayout.html.twig' %}
+
+{% block page_left %}
+    <div style="margin-left: 10px">
+
+
+        <h3 >CommandeVente</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li class="active"><a href="{{ path('Vcmd_new') }}">Creer Commande</a></li>
+            <li><a href="{{ path('Vcmd_list') }}">Liste Commande</a></li>
+
+        </ul>
+        <h3 >Facture</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li><a href="{{ path('facture_list') }}">Facture</a></li>
+
+
+        </ul>
+        <h3 >Client</h3>
+        <ul style="font-size: medium ;" class="nav nav-pills nav-stacked">
+
+            <li ><a href="{{ path('Aclient_index') }}">Client</a></li>
+
+
+        </ul>
+
+    </div>
+
+{% endblock %}
+{% block page_top %}
+    <div class="row">
+        <div style="font-size: 25px;margin-top: 10px;margin-left: 20px" class=" col-md-3"> Nouvelle Cmd </div>
+        <div class="col-md-7 col-md-offset-1  " style="margin-top: 10px">
+            <div class="ui-widget">
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form) }}
+            </div>
+
+        </div>
+    </div>
+
+
+   <script>
+       $(function(){
+           $('form').attr('class','form-inline');
+           $('label').hide();
+
+       });
+   </script>
+{% endblock %}
+{% block page_center %}
+
+    <div style="margin-top: 20px" class="row">
+
+        <div class="col-md-3 ui-widget">
+
+            <input class="form-control" type="text" placeholder="Entrer Client" id="client" >
+
+        </div>
+
+    <br><br><br>
+
+        <div class="col-md-9 col-md-offset-2  ">
+
+
+            <table   class=" table table-hover table-striped table-bordered  ">
+                <thead>
+                <tr>
+                    <th class="text-center">Ref</th>
+                    <th width="200px" class="text-center">Designation</th>
+                    <th class="text-center">PrixU HT (DH)</th>
+                     <th class="text-center">Quantité</th>
+                    <th class="text-center">TVA%</th>
+                    <th class="text-center">TVA</th>
+                    <th class="text-center">Total HT (DH)</th>
+                    <th class="text-center" >Actions</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                    {% if app.session.has('commande') %}
+                    {% for cmd in app.session.get('commande') %}
+
+                        <tr id="{{ cmd.id }}">
+                            <td class="text-center">{{ cmd.id }}</td>
+                            <td 200px class="text-center">{{ cmd.designation }}</td>
+                            <td class="text-center">{{ cmd.prix }}</td>
+                            <td class="text-center">{{ cmd.quantite }}</td>
+                            <td class="text-center">{{ cmd.tauxtva }}</td>
+                            <td class="text-center">{{ cmd.tva }}</td>
+                            <td class="text-center">{{ cmd.prix*cmd.quantite }}</td>
+                            <td class="text-center" >
+                                <button class="btn btn-danger"  onclick="sup({{ cmd.id }})"  >
+                                    <span class="glyphicon glyphicon-trash"> </span></button>
+                          </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    {% endif %}
+                </tbody>
+            </table>
+
+
+            <div id="btn"  class=" col-md-offset-3">
+                {% if app.session.get('total')!=0 %}
+                    <div class="row"><div class="col-md-offset-7">
+                            <div style="font-size: 20px" class=" text-danger" >Total TTC</div>
+                            <div id="total" style="font-size: 25px" class="col-md-11 well">{{ app.session.get('totalttc') }} DH</div> </div> </div> <hr>
+                    <button class="btn btn-success col-md-4 col-md-offset-3" onclick="passer()"   >Passer Commande</button>
+                    <button  class="btn btn-danger col-md-4 col-md-offset-1 " onclick="annuler()" >Annuler Commande</button><hr><br><br>
+                {% endif %}
+            </div>
+        <br>
+    </div>
+
+
+    <script>
+
+        $(function() {
+
+
+
+            sup=function(id){
+
+                if(confirm('Etes vous sur ?')){
+                    var url=Routing.generate('suplignecmd',{'id':id});
+
+                    $.get(url,function(data){
+
+                        $('#'+id).html("");
+                        $('#total').html(data+' DH');
+                        if(data==0){
+                            $('#btn').hide();
+                        }
+
+                });
+
+            }}
+            passer=function(){
+
+                if($('#client').val()==""){
+                    $('#client').addClass("alert-danger");
+                    alert('Veuillez entrer Client');
+                }else{
+                if(confirm('Taper oui pour continuer')){
+
+                     var url=Routing.generate('Vcmd_valider');
+                       window.location.href=url;
+
+                }
+            }}
+            annuler=function(){
+                if(confirm('Etes vous sur ?')){
+
+                    var url=Routing.generate('annulercmd');
+                    window.location.href=url;
+
+                }
+            }
+
+            $('#cmdregler').hide();
+            $('#form_quantite').attr('style',"width: 80px");
+
+            $("#form_cherch").keyup(function (e) {
+
+                var n = $("#form_cherch").val();
+
+                var cat = $("#form_type").val();
+                var url = Routing.generate('complete', {'n':n,'c':cat});
+
+                $("#form_cherch").autocomplete({
+                    source: function (request, response) {
+
+
+                        $.get(url, function (data) {
+
+                                response(data);
+                        });
+                    }
+
+                });
+
+
+            });
+
+            $("#client").blur(function(){
+                var n = $("#client").val();
+                var url = Routing.generate('clientvalider', {'n':n});
+
+                $.get(url, function (data) {
+                   if(data=="non"){
+                       $("#client").val("");
+                       alert("veuilez entrer client deja enregistré");
+                   }
+
+                });
+            });
+
+
+            $("#client").keyup(function (e) {
+
+                var n = $("#client").val();
+                $("#client").removeClass("alert-danger");
+
+                var url = Routing.generate('clientcomplete', {'n':n});
+
+                $("#client").autocomplete({
+                    source: function (request, response) {
+
+
+                        $.get(url, function (data) {
+
+                            response(data);
+                        });
+                    }
+
+                });
+
+
+            })
+
+
+
+            $('form').submit(function(){
+
+                $('#form_Ajouter').attr('disabled','disabled');
+                var n = $("#form_cherch").val();
+
+                var cat = $("#form_type").val();
+                var q=$("#form_quantite").val();
+                patt2 = /^[0-9]+$/g;
+                if(! patt2.test(q) || q == 0){
+                    alert('Quantité invalide ... ');
+                    $("#form_quantite").val("");
+                    $('#form_Ajouter').removeAttr('disabled');
+                    return false;
+                }
+
+
+                var url = Routing.generate('Vcmdnew', {'n': n, 'c': cat,'q':q});
+
+
+                $.get(url, function (data) {
+                    if(data=='-1'){ alert('Produit inexistant');$('#form_Ajouter').removeAttr('disabled'); return false}
+
+                    if(data=='-2'){ alert('Quantite demandé insufisante');$('#form_Ajouter').removeAttr('disabled'); return false}
+
+                    var i=0;
+                    $('#btn').html("");
+                    $('#btn').show();
+                    $('#tbody').html("");
+                var total=0;
+                for(i=0;i<data.length;i++){
+                    total=total+data[i].soustotal+data[i].tva;
+
+                    ref=data[i].id;des=data[i].designation;prix=data[i].prix;q=data[i].quantite;t=data[i].soustotal;
+                    tva=data[i].tva; tauxtva=data[i].tauxtva;
+
+                    $('#tbody').append('<tr id="'+ref+'" class="text-center"> ' +
+                                '<td>' + ref + '</td>   ' +
+                                  '<td width="200px">'+ des +'</td>' +
+                                '<td> ' + prix + ' </td>' +
+                                '<td>' + q + '</td>' +
+                                '<td> ' + tauxtva + ' </td>' +
+                            '<td> ' + tva + ' </td>' +
+                                '<td> ' + t + '</td> ' +
+                                '<td> <button class="btn btn-danger btn-sm" onclick="sup('+ref+')" >' +
+                            '<span class="glyphicon glyphicon-trash"> Delete</span></button> </td>'+
+                            '</tr> '
+
+                               );
+
+
+                    }
+                $('#btn').html(' <div class="row">'+'<div class="col-md-offset-8">' +
+                        ' <div style="font-size: 20px" class=" text-danger" >Total ttc</div> ' +
+                        '<div  id="total" style="font-size: 20px" class=" col-md-10 well">'+total+'DH</div> </div> </div> <hr> ' +
+                        '<button class="btn btn-success col-md-4 col-md-offset-3" onclick="passer()"   >Passer Commande</button> ' +
+                        '<button  class="btn btn-danger col-md-4 col-md-offset-1 " onclick="annuler()" >Annuler Commande</button><hr>' +
+                        '<br><br>');
+
+                    $("#form_cherch").val("");
+
+                    $("#form_quantite").val("");
+                 });
+
+
+                $('#form_Ajouter').removeAttr('disabled');
+                return false;
+
+            });
+
+
+
+
+
+        })
+
+
+    </script>
+
+{% endblock %}

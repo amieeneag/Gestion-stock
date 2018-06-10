@@ -1,0 +1,141 @@
+<?php
+
+namespace VenteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CommandeVente
+ *
+ * @ORM\Table(name="commande_vente")
+ * @ORM\Entity(repositoryClass="VenteBundle\Repository\CommandeVenteRepository")
+ */
+class CommandeVente
+{
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AdminBundle\Entity\Utilisateur", inversedBy="utilisateurs" , cascade={"persist"})
+     * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
+     *@ORM\JoinColumn(nullable=true)
+     */
+    private $utilisateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="VenteBundle\Entity\Client", inversedBy="clients" , cascade={"persist"})
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     *@ORM\JoinColumn(nullable=true)
+     */
+    private $client;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="total", type="decimal", precision=10, scale=2)
+     */
+    private $total;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etat", type="string", length=255)
+     */
+    private $etat;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return CommandeVente
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set total
+     *
+     * @param string $total
+     * @return CommandeVente
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * Get total
+     *
+     * @return string 
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * Set etat
+     *
+     * @param string $etat
+     * @return CommandeVente
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return string 
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+}
